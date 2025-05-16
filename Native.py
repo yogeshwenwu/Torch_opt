@@ -146,32 +146,32 @@ print(f"Throughput (RPS): {throughput_rps:.2f} s")
 print(f"Time to First Token (TTFT): {ttft_time:.6f} s")
 print(f"Time per Output Token (TPOT): {tpot:.6f} s")
 
-# # Profiling the model over 12 iterations to match schedule
-# with profile(
-#     activities=[ProfilerActivity.CPU],  # Profile CPU activity
-#     schedule=schedule(
-#         wait=1,   # Skip 1 iteration
-#         warmup=2, # Warm up for 2 iterations
-#         active=3, # Record 3 iterations
-#         repeat=2  # Repeat the cycle twice (total 12 steps)
-#     ),
-#     record_shapes=True,   # Record tensor shapes
-#     profile_memory=True,  # Track memory usage
-#     with_stack=True     # To avoid INTERNAL ASSERT error
-# ) as prof:
-#     for i in range(12):  # 12 iterations to fully cover the schedule
-#         sentence = sentences[i % 10]  # Cycle through 10 sentences
-#         inputs = tokenizer(sentence, return_tensors="pt")
-#         input_ids = inputs["input_ids"].to("cpu")
+# Profiling the model over 12 iterations to match schedule
+with profile(
+    activities=[ProfilerActivity.CPU],  # Profile CPU activity
+    schedule=schedule(
+        wait=1,   # Skip 1 iteration
+        warmup=2, # Warm up for 2 iterations
+        active=3, # Record 3 iterations
+        repeat=2  # Repeat the cycle twice (total 12 steps)
+    ),
+    record_shapes=True,   # Record tensor shapes
+    profile_memory=True,  # Track memory usage
+    with_stack=True     # To avoid INTERNAL ASSERT error
+) as prof:
+    for i in range(12):  # 12 iterations to fully cover the schedule
+        sentence = sentences[i % 10]  # Cycle through 10 sentences
+        inputs = tokenizer(sentence, return_tensors="pt")
+        input_ids = inputs["input_ids"].to("cpu")
         
-#         with torch.no_grad():
-#             with record_function(f"Inference_Sentence_{(i % 10) + 1}"):
-#                 outputs = model(input_ids)
-#         prof.step()
+        with torch.no_grad():
+            with record_function(f"Inference_Sentence_{(i % 10) + 1}"):
+                outputs = model(input_ids)
+        prof.step()
 
-# # Print profiling results
-# print("Top 10 Operations by CPU Time Total:")
-# print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
+# Print profiling results
+print("Top 10 Operations by CPU Time Total:")
+print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
 
 # print("\nTop 2 Operations by Self CPU Time Total:")
 # print(prof.key_averages().table(sort_by="self_cpu_time_total", row_limit=2))

@@ -1,0 +1,9 @@
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.60s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.16s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.23s/it]
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Traceback (most recent call last):
+  File "/mnt/mydisk/yogesh/Torch_opt/Scripter.py", line 35, in <module>
+    class LlamaWrapper(torch.nn.Module):
+  File "/mnt/mydisk/yogesh/Torch_opt/Scripter.py", line 43, in LlamaWrapper
+    **kwargs: Unpack[KwargsForCausalLM]
+                     ^^^^^^^^^^^^^^^^^
+NameError: name 'KwargsForCausalLM' is not defined

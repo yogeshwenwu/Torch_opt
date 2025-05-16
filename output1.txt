@@ -1,0 +1,35 @@
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.58s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.33s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.36s/it]
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Traceback (most recent call last):
+  File "/mnt/mydisk/yogesh/Torch_opt/Scripter.py", line 84, in <module>
+    scripted_model = torch.jit.script(model)
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/torch/jit/_script.py", line 1432, in script
+    return _script_impl(
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/torch/jit/_script.py", line 1146, in _script_impl
+    return torch.jit._recursive.create_script_module(
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/torch/jit/_recursive.py", line 559, in create_script_module
+    return create_script_module_impl(nn_module, concrete_type, stubs_fn)
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/torch/jit/_recursive.py", line 572, in create_script_module_impl
+    method_stubs = stubs_fn(nn_module)
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/torch/jit/_recursive.py", line 895, in infer_methods_to_compile
+    stubs.append(make_stub_from_method(nn_module, method))
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/torch/jit/_recursive.py", line 88, in make_stub_from_method
+    return make_stub(func, method_name)
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/torch/jit/_recursive.py", line 72, in make_stub
+    ast = get_jit_def(func, name, self_name="RecursiveScriptModule")
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/torch/jit/frontend.py", line 373, in get_jit_def
+    return build_def(
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/torch/jit/frontend.py", line 423, in build_def
+    param_list = build_param_list(ctx, py_def.args, self_name, pdt_arg_types)
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/torch/jit/frontend.py", line 449, in build_param_list
+    raise NotSupportedError(ctx_range, _vararg_kwarg_err)
+torch.jit.frontend.NotSupportedError: Compiled functions can't take variable number of arguments or use keyword-only arguments with defaults:
+  File "/mnt/mydisk/yogesh/anaconda3/envs/env_py_3.10_torch_2.4/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 801
+        cache_position: Optional[torch.LongTensor] = None,
+        logits_to_keep: Union[int, torch.Tensor] = 0,
+        **kwargs: Unpack[KwargsForCausalLM],
+         ~~~~~~~ <--- HERE
+    ) -> Union[Tuple, CausalLMOutputWithPast]:
+        r"""
+
